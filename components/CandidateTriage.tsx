@@ -26,6 +26,7 @@ import {
   Search,
   Sparkles,
   Inbox,
+  Plus,
 } from 'lucide-react';
 
 interface CandidateTriageProps {
@@ -36,6 +37,7 @@ interface CandidateTriageProps {
   onStageChange: (candidateId: string, newStage: CandidateStage) => void;
   selectedStageFilter: string;
   onStageFilterChange: (stage: string) => void;
+  onAddCandidate?: () => void;
 }
 
 export const CandidateTriage: React.FC<CandidateTriageProps> = ({
@@ -46,6 +48,7 @@ export const CandidateTriage: React.FC<CandidateTriageProps> = ({
   onStageChange,
   selectedStageFilter,
   onStageFilterChange,
+  onAddCandidate,
 }) => {
   // Selected candidate state in the detail pane
   const [activeCandidateId, setActiveCandidateId] = useState<string | null>(
@@ -127,9 +130,18 @@ export const CandidateTriage: React.FC<CandidateTriageProps> = ({
         <h3 className="text-lg font-bold text-[#5c2217] font-serif mb-1">
           No Candidates in Triage Queue
         </h3>
-        <p className="text-sm text-[#5b5d5e] max-w-sm mx-auto">
-          No candidates match your current search or filter criteria. Try adjusting or clearing filters.
+        <p className="text-sm text-[#5b5d5e] max-w-sm mx-auto mb-4">
+          No candidates match your current filters, or no candidates have been added to the pipeline yet.
         </p>
+        {onAddCandidate && (
+          <button
+            onClick={onAddCandidate}
+            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-[#ea694e] hover:bg-[#d8583d] active:scale-[0.98] rounded-full shadow-sm shadow-[#ea694e]/20 transition-all cursor-pointer"
+          >
+            <Plus className="h-4 w-4" />
+            <span>Add Candidate</span>
+          </button>
+        )}
       </div>
     );
   }

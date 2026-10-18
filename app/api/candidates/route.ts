@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/db';
 import Candidate from '@/models/Candidate';
-import { ensureSeeded } from '@/lib/seedHelper';
 import { inMemoryStore } from '@/lib/inMemoryStore';
 import { ICandidate } from '@/lib/types';
 
 export async function GET(request: NextRequest) {
   try {
-    await ensureSeeded();
     const searchParams = request.nextUrl.searchParams;
     const search = searchParams.get('search')?.trim() || '';
     const stage = searchParams.get('stage') || 'all';

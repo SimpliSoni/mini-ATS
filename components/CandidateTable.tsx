@@ -15,6 +15,7 @@ import {
   Mail,
   Phone,
   FileText,
+  Plus,
 } from 'lucide-react';
 
 interface CandidateTableProps {
@@ -26,6 +27,7 @@ interface CandidateTableProps {
   sortBy: string;
   sortOrder: 'asc' | 'desc';
   onSortChange: (column: 'date' | 'experience' | 'rating' | 'name') => void;
+  onAddCandidate?: () => void;
 }
 
 export const CandidateTable: React.FC<CandidateTableProps> = ({
@@ -37,6 +39,7 @@ export const CandidateTable: React.FC<CandidateTableProps> = ({
   sortBy,
   sortOrder,
   onSortChange,
+  onAddCandidate,
 }) => {
   if (candidates.length === 0) {
     return (
@@ -47,9 +50,18 @@ export const CandidateTable: React.FC<CandidateTableProps> = ({
         <h3 className="text-base font-bold text-[#5c2217] font-serif mb-1">
           No candidates found
         </h3>
-        <p className="text-sm text-[#5b5d5e] max-w-sm mx-auto">
-          No profiles matched your active search or filter criteria. Try adjusting your filters.
+        <p className="text-sm text-[#5b5d5e] max-w-sm mx-auto mb-4">
+          No profiles matched your active search or filter criteria, or no candidates exist yet.
         </p>
+        {onAddCandidate && (
+          <button
+            onClick={onAddCandidate}
+            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-[#ea694e] hover:bg-[#d8583d] active:scale-[0.98] rounded-full shadow-sm shadow-[#ea694e]/20 transition-all cursor-pointer"
+          >
+            <Plus className="h-4 w-4" />
+            <span>Add Candidate</span>
+          </button>
+        )}
       </div>
     );
   }

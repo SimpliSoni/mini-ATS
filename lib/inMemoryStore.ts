@@ -1,9 +1,7 @@
 import { ICandidate, CandidateStage, DashboardMetricsData } from './types';
-import { INITIAL_CANDIDATES } from './mockData';
 
 // Global cache for development hot reloading
 declare global {
-  // eslint-disable-next-line no-var
   var __inMemoryCandidates: ICandidate[] | undefined;
 }
 
@@ -12,14 +10,7 @@ function generateId(): string {
 }
 
 function initializeStore(): ICandidate[] {
-  return INITIAL_CANDIDATES.map((c, index) => ({
-    ...c,
-    _id: `cand_seed_${index + 1}`,
-    stage: c.stage as CandidateStage,
-    skills: [...c.skills],
-    createdAt: c.createdAt,
-    updatedAt: c.updatedAt,
-  }));
+  return [];
 }
 
 if (!global.__inMemoryCandidates) {
@@ -28,14 +19,14 @@ if (!global.__inMemoryCandidates) {
 
 export const inMemoryStore = {
   getAll(): ICandidate[] {
-    if (!global.__inMemoryCandidates || global.__inMemoryCandidates.length === 0) {
-      global.__inMemoryCandidates = initializeStore();
+    if (!global.__inMemoryCandidates) {
+      global.__inMemoryCandidates = [];
     }
     return global.__inMemoryCandidates;
   },
 
   reset(): ICandidate[] {
-    global.__inMemoryCandidates = initializeStore();
+    global.__inMemoryCandidates = [];
     return global.__inMemoryCandidates;
   },
 

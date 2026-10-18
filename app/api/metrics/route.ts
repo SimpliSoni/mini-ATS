@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/db';
 import Candidate from '@/models/Candidate';
-import { ensureSeeded } from '@/lib/seedHelper';
 import { inMemoryStore } from '@/lib/inMemoryStore';
 import { CandidateStage, DashboardMetricsData } from '@/lib/types';
 
 export async function GET() {
   try {
-    await ensureSeeded();
     const db = await connectToDatabase();
 
     if (db) {

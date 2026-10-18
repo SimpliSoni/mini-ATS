@@ -353,6 +353,11 @@ export default function Home() {
             onStageChange={handleStageChange}
             selectedStageFilter={selectedStage}
             onStageFilterChange={setSelectedStage}
+            onAddCandidate={() => {
+              setFormMode('create');
+              setEditingCandidate(null);
+              setFormDialogOpen(true);
+            }}
           />
         ) : viewMode === 'kanban' ? (
           <CandidateKanban
@@ -398,6 +403,11 @@ export default function Home() {
                 setSortBy(col);
                 setSortOrder('asc');
               }
+            }}
+            onAddCandidate={() => {
+              setFormMode('create');
+              setEditingCandidate(null);
+              setFormDialogOpen(true);
             }}
           />
         )}
