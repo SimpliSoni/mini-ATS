@@ -7,7 +7,7 @@ import {
   CandidateStage,
 } from '@/lib/types';
 import { STAGES } from '@/lib/utils';
-import { X, Star, AlertCircle, Plus, Loader2 } from 'lucide-react';
+import { X, Star, AlertCircle, Loader2 } from 'lucide-react';
 
 interface CandidateFormDialogProps {
   isOpen: boolean;
@@ -117,15 +117,15 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl max-w-xl w-full shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/35 backdrop-blur-md flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl max-w-xl w-full shadow-2xl border border-[#5b5d5e]/15 overflow-hidden animate-in fade-in zoom-in-95 duration-200 font-sans">
         {/* Header */}
-        <div className="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50/80">
+        <div className="p-5 border-b border-[#5b5d5e]/15 flex items-center justify-between bg-[#FAF7F5]">
           <div>
-            <h3 className="text-lg font-bold text-slate-900">
+            <h3 className="text-lg font-bold text-[#5c2217] font-serif tracking-tight">
               {mode === 'create' ? 'Add New Candidate' : 'Edit Candidate Profile'}
             </h3>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-[#5b5d5e] mt-0.5">
               {mode === 'create'
                 ? 'Fill in the candidate details to register them in the hiring pipeline.'
                 : 'Modify candidate attributes, stage, evaluations, and notes.'}
@@ -133,7 +133,7 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors"
+            className="p-1.5 rounded-full text-[#5b5d5e] hover:text-[#5c2217] hover:bg-black/[0.05] transition-colors cursor-pointer"
           >
             <X className="h-5 w-5" />
           </button>
@@ -142,8 +142,8 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
-            <div className="p-3 rounded-lg bg-rose-50 border border-rose-200 flex items-center gap-2 text-rose-700 text-xs font-medium animate-in fade-in">
-              <AlertCircle className="h-4 w-4 shrink-0" />
+            <div className="p-3 rounded-xl bg-[#5c2217]/10 border border-[#5c2217]/25 flex items-center gap-2 text-[#5c2217] text-xs font-medium">
+              <AlertCircle className="h-4 w-4 shrink-0 text-[#ea694e]" />
               <span>{error}</span>
             </div>
           )}
@@ -151,8 +151,8 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
           {/* Row 1: Name & Role */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Full Name <span className="text-rose-500">*</span>
+              <label className="block text-xs font-semibold text-[#373837] mb-1">
+                Full Name <span className="text-[#ea694e]">*</span>
               </label>
               <input
                 type="text"
@@ -160,13 +160,13 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
                 placeholder="e.g. Maya Patel"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                className="w-full px-3.5 py-2 text-sm bg-[#FAF7F5] border border-[#5b5d5e]/20 rounded-xl text-[#373837] placeholder-[#5b5d5e]/70 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ea694e]/20 focus:border-[#ea694e] transition-all"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Target Role <span className="text-rose-500">*</span>
+              <label className="block text-xs font-semibold text-[#373837] mb-1">
+                Target Role <span className="text-[#ea694e]">*</span>
               </label>
               <input
                 type="text"
@@ -174,7 +174,7 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
                 placeholder="e.g. Senior Frontend Engineer"
                 value={formData.role}
                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                className="w-full px-3.5 py-2 text-sm bg-[#FAF7F5] border border-[#5b5d5e]/20 rounded-xl text-[#373837] placeholder-[#5b5d5e]/70 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ea694e]/20 focus:border-[#ea694e] transition-all"
               />
             </div>
           </div>
@@ -182,8 +182,8 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
           {/* Row 2: Email & Phone */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Email Address <span className="text-rose-500">*</span>
+              <label className="block text-xs font-semibold text-[#373837] mb-1">
+                Email Address <span className="text-[#ea694e]">*</span>
               </label>
               <input
                 type="email"
@@ -191,12 +191,12 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
                 placeholder="maya.patel@example.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                className="w-full px-3.5 py-2 text-sm bg-[#FAF7F5] border border-[#5b5d5e]/20 rounded-xl text-[#373837] placeholder-[#5b5d5e]/70 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ea694e]/20 focus:border-[#ea694e] transition-all"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label className="block text-xs font-semibold text-[#373837] mb-1">
                 Phone Number
               </label>
               <input
@@ -204,7 +204,7 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
                 placeholder="+1 (555) 234-5678"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                className="w-full px-3.5 py-2 text-sm bg-[#FAF7F5] border border-[#5b5d5e]/20 rounded-xl text-[#373837] placeholder-[#5b5d5e]/70 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ea694e]/20 focus:border-[#ea694e] transition-all"
               />
             </div>
           </div>
@@ -212,7 +212,7 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
           {/* Row 3: Stage & Experience */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label className="block text-xs font-semibold text-[#373837] mb-1">
                 Pipeline Stage
               </label>
               <select
@@ -220,7 +220,7 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
                 onChange={(e) =>
                   setFormData({ ...formData, stage: e.target.value as CandidateStage })
                 }
-                className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all cursor-pointer"
+                className="w-full px-3.5 py-2 text-sm bg-[#FAF7F5] border border-[#5b5d5e]/20 rounded-xl text-[#373837] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ea694e]/20 focus:border-[#ea694e] transition-all cursor-pointer"
               >
                 {STAGES.map((s) => (
                   <option key={s} value={s}>
@@ -231,7 +231,7 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label className="block text-xs font-semibold text-[#373837] mb-1">
                 Experience (Years)
               </label>
               <input
@@ -243,7 +243,7 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
                 onChange={(e) =>
                   setFormData({ ...formData, experience: parseFloat(e.target.value) || 0 })
                 }
-                className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                className="w-full px-3.5 py-2 text-sm bg-[#FAF7F5] border border-[#5b5d5e]/20 rounded-xl text-[#373837] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ea694e]/20 focus:border-[#ea694e] transition-all"
               />
             </div>
           </div>
@@ -251,7 +251,7 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
           {/* Row 4: Rating & Resume URL */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label className="block text-xs font-semibold text-[#373837] mb-1">
                 Candidate Rating (1 to 5)
               </label>
               <div className="flex items-center gap-1.5 py-1.5">
@@ -260,25 +260,25 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
                     key={star}
                     type="button"
                     onClick={() => setFormData({ ...formData, rating: star })}
-                    className="p-1 hover:scale-110 transition-transform focus:outline-none"
+                    className="p-1 hover:scale-110 transition-transform focus:outline-none cursor-pointer"
                   >
                     <Star
                       className={`h-5 w-5 ${
                         star <= formData.rating
-                          ? 'fill-amber-400 text-amber-400'
-                          : 'text-slate-300'
+                          ? 'fill-[#ea694e] text-[#ea694e]'
+                          : 'text-[#5b5d5e]/30'
                       }`}
                     />
                   </button>
                 ))}
-                <span className="text-xs font-bold text-slate-700 ml-2">
+                <span className="text-xs font-semibold text-[#5c2217] ml-2">
                   {formData.rating}.0 / 5.0
                 </span>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label className="block text-xs font-semibold text-[#373837] mb-1">
                 Resume Link / URL
               </label>
               <input
@@ -286,28 +286,28 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
                 placeholder="https://example.com/resume.pdf"
                 value={formData.resumeUrl}
                 onChange={(e) => setFormData({ ...formData, resumeUrl: e.target.value })}
-                className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                className="w-full px-3.5 py-2 text-sm bg-[#FAF7F5] border border-[#5b5d5e]/20 rounded-xl text-[#373837] placeholder-[#5b5d5e]/70 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ea694e]/20 focus:border-[#ea694e] transition-all"
               />
             </div>
           </div>
 
           {/* Row 5: Skills */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label className="block text-xs font-semibold text-[#373837] mb-1">
               Skills (comma-separated)
             </label>
             <input
               type="text"
-              placeholder="e.g. React, Next.js, TypeScript, Tailwind CSS"
+              placeholder="e.g. React, Next.js, TypeScript, Node.js"
               value={skillsInput}
               onChange={(e) => setSkillsInput(e.target.value)}
-              className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+              className="w-full px-3.5 py-2 text-sm bg-[#FAF7F5] border border-[#5b5d5e]/20 rounded-xl text-[#373837] placeholder-[#5b5d5e]/70 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ea694e]/20 focus:border-[#ea694e] transition-all"
             />
           </div>
 
           {/* Row 6: Notes */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label className="block text-xs font-semibold text-[#373837] mb-1">
               Interviewer Notes & Background
             </label>
             <textarea
@@ -315,24 +315,24 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
               placeholder="Assessment summary, cultural fit, salary expectations..."
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-              className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all resize-none"
+              className="w-full px-3.5 py-2 text-sm bg-[#FAF7F5] border border-[#5b5d5e]/20 rounded-xl text-[#373837] placeholder-[#5b5d5e]/70 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ea694e]/20 focus:border-[#ea694e] transition-all resize-none"
             />
           </div>
 
           {/* Footer Actions */}
-          <div className="pt-3 border-t border-slate-200 flex items-center justify-end gap-2.5">
+          <div className="pt-3 border-t border-[#5b5d5e]/15 flex items-center justify-end gap-2.5">
             <button
               type="button"
               onClick={onClose}
               disabled={submitting}
-              className="px-4 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+              className="px-4 py-2 text-xs font-medium text-[#373837] bg-white border border-[#5b5d5e]/20 rounded-xl hover:bg-[#FAF7F5] transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-lg transition-colors shadow-xs disabled:opacity-60"
+              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-white bg-[#ea694e] hover:bg-[#d8583d] active:scale-[0.98] rounded-xl transition-all shadow-xs disabled:opacity-60 cursor-pointer"
             >
               {submitting && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
               <span>{mode === 'create' ? 'Create Candidate' : 'Save Changes'}</span>
@@ -343,3 +343,4 @@ export const CandidateFormDialog: React.FC<CandidateFormDialogProps> = ({
     </div>
   );
 };
+

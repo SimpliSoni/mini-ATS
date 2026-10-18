@@ -1,29 +1,60 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --burnt-sienna: #ea694e;
+  --abbey: #5b5d5e;
+  --espresso: #5c2217;
+  --lunar-green: #373837;
+  --cashmere: #e9b9a6;
+
+  --background: #FAF7F5;
+  --foreground: #373837;
   --card: #ffffff;
-  --card-foreground: #0f172a;
-  --border: #e2e8f0;
-  --ring: #3b82f6;
+  --card-foreground: #373837;
+  --border: rgba(91, 93, 94, 0.14);
+  --ring: #ea694e;
+  --primary: #ea694e;
+  --primary-hover: #d8583d;
 }
 
 @theme inline {
+  --color-burnt-sienna: #ea694e;
+  --color-abbey: #5b5d5e;
+  --color-espresso: #5c2217;
+  --color-lunar-green: #373837;
+  --color-cashmere: #e9b9a6;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --font-serif: var(--font-lora), Lora, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: var(--font-open-sans), "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--font-lora), Lora, Georgia, serif;
+  --font-body: var(--font-open-sans), "Open Sans", sans-serif;
+}
+
+html {
+  font-family: var(--font-open-sans), "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #FAF7F5;
+  color: #373837;
+  font-family: var(--font-open-sans), "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   min-height: 100vh;
 }
 
-/* Custom smooth scrollbar */
+/* Headings use Lora font, bold where required */
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-lora), Lora, Georgia, Cambria, serif;
+  font-weight: 700;
+  color: #5c2217;
+}
+
+/* Material scrollbars with Abbey tint */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -34,23 +65,46 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: rgba(91, 93, 94, 0.25);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: rgba(91, 93, 94, 0.45);
 }
 
-/* Glassmorphism utility */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+/* Frosted glass header with subtle warm tint */
+.apple-glass,
+.material-glass {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
 }
 
-/* Kanban column scroll fix */
+/* Card Surface with subtle warm Material elevation and Abbey border */
+.apple-card,
+.material-card {
+  background: #ffffff;
+  border: 1px solid rgba(91, 93, 94, 0.12);
+  box-shadow: 0 1px 3px rgba(55, 56, 55, 0.04), 0 4px 12px rgba(55, 56, 55, 0.02);
+  border-radius: 16px;
+}
+
+.apple-card-hover,
+.material-card-hover {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-card-hover:hover,
+.material-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(92, 34, 23, 0.08), 0 2px 6px rgba(92, 34, 23, 0.04);
+}
+
+/* Kanban column scroll */
 .kanban-scroll {
   scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 transparent;
+  scrollbar-color: rgba(91, 93, 94, 0.25) transparent;
 }
+
+

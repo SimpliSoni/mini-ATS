@@ -1,4 +1,4 @@
-# TalentFlow ATS - Mini Applicant Tracking System
+# TalentFlow | Production Applicant Tracking System
 
 A production-ready Applicant Tracking System (ATS) application built with **Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS**, and **MongoDB Atlas with Mongoose**.
 
@@ -54,7 +54,7 @@ mini-ATS/
 │   ├── layout.tsx                  # Root layout with fonts, metadata & toast notifications
 │   └── page.tsx                    # Main ATS dashboard combining all views & state
 ├── components/
-│   ├── Navbar.tsx                  # Header with search, DB status, seed reset & add action
+│   ├── Navbar.tsx                  # Header with search & add candidate action
 │   ├── DashboardMetrics.tsx        # KPI cards & visual stage breakdown
 │   ├── CandidateKanban.tsx         # Column-based Kanban board with drag-and-drop
 │   ├── CandidateTable.tsx          # Searchable, sortable list view with quick stage actions

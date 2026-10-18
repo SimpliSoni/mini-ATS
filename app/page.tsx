@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { DashboardMetrics } from '@/components/DashboardMetrics';
 import { FilterBar } from '@/components/FilterBar';
+import { CandidateTriage } from '@/components/CandidateTriage';
 import { CandidateKanban } from '@/components/CandidateKanban';
 import { CandidateTable } from '@/components/CandidateTable';
 import { CandidateModal } from '@/components/CandidateModal';
@@ -16,17 +17,15 @@ import {
   DashboardMetricsData,
 } from '@/lib/types';
 import { toast } from 'sonner';
-import { Loader2, Plus, Sparkles, AlertCircle } from 'lucide-react';
+import { Loader2, Plus } from 'lucide-react';
 
 export default function Home() {
   const [candidates, setCandidates] = useState<ICandidate[]>([]);
   const [metrics, setMetrics] = useState<DashboardMetricsData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [dataSource, setDataSource] = useState<'mongodb' | 'in-memory' | null>(null);
-  const [isSeeding, setIsSeeding] = useState(false);
 
   // Filters & View State
-  const [viewMode, setViewMode] = useState<'kanban' | 'table'>('kanban');
+  const [viewMode, setViewMode] = useState<'triage' | 'kanban' | 'table'>('triage');
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [selectedStage, setSelectedStage] = useState<string>('all');
@@ -68,9 +67,6 @@ export default function Home() {
 
       if (candData.success) {
         setCandidates(candData.data);
-        if (candData.source) {
-          setDataSource(candData.source);
-        }
       }
 
       if (metData.success) {
@@ -260,30 +256,8 @@ export default function Home() {
     }
   };
 
-  // Handle re-seeding / mock data reset
-  const handleResetSeed = async () => {
-    setIsSeeding(true);
-    toast.info('Re-seeding candidate records...');
-    try {
-      const res = await fetch('/api/seed', { method: 'POST' });
-      const data = await res.json();
-
-      if (!res.ok || !data.success) {
-        throw new Error(data.error || 'Failed to seed database');
-      }
-
-      toast.success(`Successfully populated ${data.count} candidates!`);
-      await fetchData();
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Seed failed';
-      toast.error(msg);
-    } finally {
-      setIsSeeding(false);
-    }
-  };
-
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+    <div className="min-h-screen flex flex-col bg-[#FAF7F5] text-[#373837] font-sans">
       {/* Top Navigation */}
       <Navbar
         searchTerm={searchTerm}
@@ -293,9 +267,6 @@ export default function Home() {
           setEditingCandidate(null);
           setFormDialogOpen(true);
         }}
-        onResetSeed={handleResetSeed}
-        isSeeding={isSeeding}
-        dataSource={dataSource}
       />
 
       {/* Main Container */}
@@ -303,10 +274,10 @@ export default function Home() {
         {/* Header Title Section */}
         <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#5c2217] font-serif">
               Hiring Pipeline
             </h1>
-            <p className="text-sm text-slate-500 mt-0.5">
+            <p className="text-sm text-[#5b5d5e] mt-1">
               Track candidate stages, review interviewer notes, and coordinate hiring decisions.
             </p>
           </div>
@@ -318,7 +289,7 @@ export default function Home() {
                 setEditingCandidate(null);
                 setFormDialogOpen(true);
               }}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm shadow-blue-500/20 transition-all sm:hidden"
+              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-white bg-[#ea694e] hover:bg-[#d8583d] active:scale-[0.98] rounded-full shadow-sm shadow-[#ea694e]/20 transition-all sm:hidden cursor-pointer"
             >
               <Plus className="h-4 w-4" />
               <span>Add Candidate</span>
@@ -357,12 +328,32 @@ export default function Home() {
           totalCount={candidates.length}
         />
 
-        {/* Pipeline Views (Kanban or Table) */}
+        {/* Pipeline Views (Triage, Kanban or Table) */}
         {loading && candidates.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-24 text-slate-400">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-600 mb-3" />
+          <div className="flex flex-col items-center justify-center py-24 text-[#5b5d5e]">
+            <Loader2 className="h-7 w-7 animate-spin text-[#ea694e] mb-3" />
             <p className="text-sm font-medium">Loading candidate pipeline...</p>
           </div>
+        ) : viewMode === 'triage' ? (
+          <CandidateTriage
+            candidates={filteredCandidates}
+            onSelectCandidate={(c) => {
+              setSelectedCandidate(c);
+              setIsDetailOpen(true);
+            }}
+            onEditCandidate={(c) => {
+              setEditingCandidate(c);
+              setFormMode('edit');
+              setFormDialogOpen(true);
+            }}
+            onDeleteCandidate={(c) => {
+              setDeleteCandidateTarget(c);
+              setIsDeleteOpen(true);
+            }}
+            onStageChange={handleStageChange}
+            selectedStageFilter={selectedStage}
+            onStageFilterChange={setSelectedStage}
+          />
         ) : viewMode === 'kanban' ? (
           <CandidateKanban
             candidates={filteredCandidates}

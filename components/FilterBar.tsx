@@ -4,7 +4,7 @@ import React from 'react';
 import {
   Kanban,
   Table as TableIcon,
-  Filter,
+  LayoutList,
   ArrowUpDown,
   RotateCcw,
 } from 'lucide-react';
@@ -12,8 +12,8 @@ import { CandidateStage } from '@/lib/types';
 import { STAGES } from '@/lib/utils';
 
 interface FilterBarProps {
-  viewMode: 'kanban' | 'table';
-  onViewModeChange: (mode: 'kanban' | 'table') => void;
+  viewMode: 'triage' | 'kanban' | 'table';
+  onViewModeChange: (mode: 'triage' | 'kanban' | 'table') => void;
   selectedStage: string;
   onStageFilterChange: (stage: string) => void;
   selectedSkill: string;
@@ -48,18 +48,30 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     selectedStage !== 'all' || selectedSkill !== 'all' || sortBy !== 'date';
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200/80 p-3.5 shadow-xs mb-6 flex flex-col md:flex-row md:items-center justify-between gap-3">
+    <div className="bg-white rounded-2xl border border-[#5b5d5e]/15 p-3 shadow-[0_1px_3px_rgba(55,56,55,0.03),0_4px_12px_rgba(55,56,55,0.02)] mb-6 flex flex-col md:flex-row md:items-center justify-between gap-3 font-sans">
       {/* Left side: View switcher & Filter Dropdowns */}
       <div className="flex flex-wrap items-center gap-2.5">
-        {/* Kanban / Table Toggle */}
-        <div className="inline-flex p-1 bg-slate-100 rounded-lg border border-slate-200/80">
+        {/* Segmented Control */}
+        <div className="inline-flex p-1 bg-black/[0.04] rounded-xl border border-[#5b5d5e]/15">
+          <button
+            id="view-triage-btn"
+            onClick={() => onViewModeChange('triage')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all cursor-pointer ${
+              viewMode === 'triage'
+                ? 'bg-white text-[#5c2217] font-semibold shadow-[0_1px_3px_rgba(55,56,55,0.08)]'
+                : 'text-[#5b5d5e] hover:text-[#373837]'
+            }`}
+          >
+            <LayoutList className="h-3.5 w-3.5" />
+            <span>Triage</span>
+          </button>
           <button
             id="view-kanban-btn"
             onClick={() => onViewModeChange('kanban')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all cursor-pointer ${
               viewMode === 'kanban'
-                ? 'bg-white text-blue-600 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white text-[#5c2217] font-semibold shadow-[0_1px_3px_rgba(55,56,55,0.08)]'
+                : 'text-[#5b5d5e] hover:text-[#373837]'
             }`}
           >
             <Kanban className="h-3.5 w-3.5" />
@@ -68,10 +80,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           <button
             id="view-table-btn"
             onClick={() => onViewModeChange('table')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all cursor-pointer ${
               viewMode === 'table'
-                ? 'bg-white text-blue-600 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white text-[#5c2217] font-semibold shadow-[0_1px_3px_rgba(55,56,55,0.08)]'
+                : 'text-[#5b5d5e] hover:text-[#373837]'
             }`}
           >
             <TableIcon className="h-3.5 w-3.5" />
@@ -85,7 +97,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             id="stage-filter-select"
             value={selectedStage}
             onChange={(e) => onStageFilterChange(e.target.value)}
-            className="text-xs font-medium bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-2 text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
+            className="text-xs font-medium bg-[#FAF7F5] hover:bg-black/[0.04] border border-[#5b5d5e]/20 rounded-xl px-3 py-2 text-[#373837] focus:outline-none focus:ring-2 focus:ring-[#ea694e]/20 focus:border-[#ea694e] cursor-pointer transition-colors"
           >
             <option value="all">All Stages</option>
             {STAGES.map((s) => (
@@ -102,7 +114,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             id="skill-filter-select"
             value={selectedSkill}
             onChange={(e) => onSkillFilterChange(e.target.value)}
-            className="text-xs font-medium bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-2 text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer max-w-[150px] truncate"
+            className="text-xs font-medium bg-[#FAF7F5] hover:bg-black/[0.04] border border-[#5b5d5e]/20 rounded-xl px-3 py-2 text-[#373837] focus:outline-none focus:ring-2 focus:ring-[#ea694e]/20 focus:border-[#ea694e] cursor-pointer max-w-[160px] truncate transition-colors"
           >
             <option value="all">All Skills</option>
             {availableSkills.map((sk) => (
@@ -117,7 +129,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         {hasActiveFilters && (
           <button
             onClick={onResetFilters}
-            className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700 px-2 py-1.5 rounded-md hover:bg-blue-50 transition-colors"
+            className="inline-flex items-center gap-1 text-xs font-medium text-[#ea694e] hover:text-[#d8583d] px-2.5 py-1.5 rounded-lg hover:bg-[#ea694e]/10 transition-colors cursor-pointer"
           >
             <RotateCcw className="h-3 w-3" />
             <span>Reset</span>
@@ -126,10 +138,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       </div>
 
       {/* Right side: Sorting Controls and Candidate Count */}
-      <div className="flex items-center justify-between md:justify-end gap-3 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100">
+      <div className="flex items-center justify-between md:justify-end gap-3 pt-2 md:pt-0 border-t md:border-t-0 border-[#5b5d5e]/15">
         {/* Count indicator */}
-        <span className="text-xs font-medium text-slate-500">
-          Showing <strong className="text-slate-800">{filteredCount}</strong> of{' '}
+        <span className="text-xs font-normal text-[#5b5d5e]">
+          Showing <strong className="font-semibold text-[#5c2217]">{filteredCount}</strong> of{' '}
           {totalCount} candidates
         </span>
 
@@ -141,7 +153,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             onChange={(e) =>
               onSortByChange(e.target.value as 'date' | 'experience' | 'rating' | 'name')
             }
-            className="text-xs font-medium bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-2 text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
+            className="text-xs font-medium bg-[#FAF7F5] hover:bg-black/[0.04] border border-[#5b5d5e]/20 rounded-xl px-3 py-2 text-[#373837] focus:outline-none focus:ring-2 focus:ring-[#ea694e]/20 focus:border-[#ea694e] cursor-pointer transition-colors"
           >
             <option value="date">Sort: Applied Date</option>
             <option value="experience">Sort: Experience</option>
@@ -151,7 +163,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
           <button
             onClick={onToggleSortOrder}
-            className="p-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors"
+            className="p-2 rounded-xl bg-[#FAF7F5] hover:bg-black/[0.04] border border-[#5b5d5e]/20 text-[#5b5d5e] hover:text-[#5c2217] transition-colors cursor-pointer"
             title={`Sort ${sortOrder === 'asc' ? 'Descending' : 'Ascending'}`}
           >
             <ArrowUpDown className="h-3.5 w-3.5" />
